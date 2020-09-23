@@ -46,7 +46,7 @@
     "dsmorse-gridster": "^0.8.0",
     "file-saver": "^2.0.1",
     "formik": "^1.5.8",
-    "history": "^4.7.2",
+    "history": "^5.0.0",
     "ipaddr.js": "~1.2.0",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "~2.2.4",
