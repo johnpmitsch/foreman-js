@@ -34,7 +34,7 @@ jobs:
       with:
         filters: |
           matched:
-            - ${matrix.path}
+            - ${{ matrix.path }}
     - uses: actions/setup-node@v1
       if: ${{ steps.changes.matched == 'true' }}
       with:
@@ -42,11 +42,11 @@ jobs:
     - name: Checkout foreman-js
       if: ${{ steps.changes.matched == 'true' }}
       uses: actions/checkout@v2
-    - name: package tarball 
+    - name: Package tarball 
       if: ${{ steps.changes.matched == 'true' }}
       run:  npm pack 
       working-directory: ${{ github.workspace }}/packages/${{ matrix.package }}
-    - name: upload tarball locally
+    - name: Upload tarball locally
       if: ${{ steps.changes.matched == 'true' }}
       uses: 'actions/upload-artifact@v2'
       with:
