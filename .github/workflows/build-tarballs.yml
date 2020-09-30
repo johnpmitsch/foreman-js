@@ -35,7 +35,8 @@ jobs:
         filters: |
           matched:
             - ${{ matrix.path }}
-    - run: echo ${{ steps.changes }}
+    - run: echo ${{ steps.changes.outputs.matched }}
+    - run: echo ${{ steps.changes.matched }}
     - name: Set up node
       uses: actions/setup-node@v1
       if: ${{ steps.changes.matched == 'true' }}
