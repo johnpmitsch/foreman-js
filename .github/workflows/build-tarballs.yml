@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         package: ['builder', 'eslint-plugin-foreman', 'find-foreman', 'stories', 'test', 'vendor-core', 'vendor-dev', 'vendor']
-        include:
+        include: # providing package path info
         - package: builder
           path: 'packages/builder/**'
         - package: eslint-plugin-foreman
@@ -28,6 +28,7 @@ jobs:
           path: 'packages/vendor/**'
 
     steps:
+    # only run if changes are detected in specified path
     - name: Detect changes
       uses: dorny/paths-filter@v2.2.0
       id: changes
@@ -35,22 +36,20 @@ jobs:
         filters: |
           matched:
             - ${{ matrix.path }}
-    - run: echo ${{ steps.changes.outputs.matched }}
-    - run: echo ${{ steps.changes.matched }}
     - name: Set up node
+      if: ${{ steps.changes.outputs.matched == 'true' }}
       uses: actions/setup-node@v1
-      if: ${{ steps.changes.matched == 'true' }}
       with:
         node-version: 12.x
     - name: Checkout foreman-js
-      if: ${{ steps.changes.matched == 'true' }}
+      if: ${{ steps.changes.outputs.matched == 'true' }}
       uses: actions/checkout@v2
     - name: Package tarball 
-      if: ${{ steps.changes.matched == 'true' }}
+      if: ${{ steps.changes.outputs.matched == 'true' }}
       run:  npm pack 
       working-directory: ${{ github.workspace }}/packages/${{ matrix.package }}
     - name: Upload tarball locally
-      if: ${{ steps.changes.matched == 'true' }}
+      if: ${{ steps.changes.outputs.matched == 'true' }}
       uses: 'actions/upload-artifact@v2'
       with:
         name: foreman-js-${{ matrix.package }}-pr-${{ github.event.number }}.tgz
