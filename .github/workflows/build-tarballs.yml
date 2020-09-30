@@ -9,22 +9,22 @@ jobs:
     strategy:
       matrix:
         package: ['builder', 'eslint-plugin-foreman', 'find-foreman', 'stories', 'test', 'vendor-core', 'vendor-dev', 'vendor']
-        target:
-        - name: builder
+        include:
+        - package: builder
           path: 'packages/builder/**'
-        - name: eslint-plugin-foreman
+        - package: eslint-plugin-foreman
           path: 'packages/eslint-plugin-foreman/**'
-        - name: find-foreman
+        - package: find-foreman
           path: 'packages/find-foreman/**'
-        - name: stories
+        - package: stories
           path: 'packages/stories/**'
-        - name: test
+        - package: test
           path: 'packages/test/**'
-        - name: vendor-core
+        - package: vendor-core
           path: 'packages/vendor-core/**'
-        - name: vendor-dev
+        - package: vendor-dev
           path: 'packages/vendor-dev/**'
-        - name: vendor
+        - package: vendor
           path: 'packages/vendor/**'
 
     steps:
@@ -34,7 +34,7 @@ jobs:
       with:
         filters: |
           matched:
-            - ${matrix.target.path}
+            - ${matrix.path}
     - uses: actions/setup-node@v1
       if: ${{ steps.changes.matched == 'true' }}
       with:
