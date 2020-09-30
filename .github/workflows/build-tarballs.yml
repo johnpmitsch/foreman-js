@@ -35,7 +35,9 @@ jobs:
         filters: |
           matched:
             - ${{ matrix.path }}
-    - uses: actions/setup-node@v1
+    - uses: hmarr/debug-action
+    - name: Set up node
+      uses: actions/setup-node@v1
       if: ${{ steps.changes.matched == 'true' }}
       with:
         node-version: 12.x
