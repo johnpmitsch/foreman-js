@@ -4,21 +4,50 @@ on:
     branches: [master]
 
 jobs:
-  build-tarballs:
-    runs-on: ubuntu-latest
+  build-tarball:
+    runs-on: 'ubuntu-latest'
     strategy:
       matrix:
         package: ['builder', 'eslint-plugin-foreman', 'find-foreman', 'stories', 'test', 'vendor-core', 'vendor-dev', 'vendor']
+        target:
+        - name: builder
+          path: 'packages/builder/**'
+        - name: eslint-plugin-foreman
+          path: 'packages/eslint-plugin-foreman/**'
+        - name: find-foreman
+          path: 'packages/find-foreman/**'
+        - name: stories
+          path: 'packages/stories/**'
+        - name: test
+          path: 'packages/test/**'
+        - name: vendor-core
+          path: 'packages/vendor-core/**'
+        - name: vendor-dev
+          path: 'packages/vendor-dev/**'
+        - name: vendor
+          path: 'packages/vendor/**'
+
     steps:
+    - name: Detect changes
+      uses: dorny/paths-filter@v2.2.0
+      id: changes
+      with:
+        filters: |
+          matched:
+            - ${matrix.target.path}
     - uses: actions/setup-node@v1
+      if: ${{ steps.changes.matched == 'true' }}
       with:
         node-version: 12.x
     - name: Checkout foreman-js
+      if: ${{ steps.changes.matched == 'true' }}
       uses: actions/checkout@v2
     - name: package tarball 
+      if: ${{ steps.changes.matched == 'true' }}
       run:  npm pack 
       working-directory: ${{ github.workspace }}/packages/${{ matrix.package }}
     - name: upload tarball locally
+      if: ${{ steps.changes.matched == 'true' }}
       uses: 'actions/upload-artifact@v2'
       with:
         name: foreman-js-${{ matrix.package }}-pr-${{ github.event.number }}.tgz
