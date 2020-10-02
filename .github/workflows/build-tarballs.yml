@@ -45,7 +45,7 @@ jobs:
       with:
         msg: |
           A tarball was created for the ${{ matrix.package }} package for testing purposes. 
-          You can test the PR using the instructions [https://github.com/theforeman/foreman-js/blob/master/CONTRIBUTING.md#testing-pull-requests](here)
+          You can test the PR using the instructions [here](https://github.com/theforeman/foreman-js/blob/master/CONTRIBUTING.md#testing-pull-requests)
           
           A direct download is available using
           ```
