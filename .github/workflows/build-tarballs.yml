@@ -44,14 +44,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         msg: |
-          A tarball was created for the ${{ matrix.package }} package for testing purposes. 
-          You can test the PR using the instructions [here](https://github.com/theforeman/foreman-js/blob/master/CONTRIBUTING.md#testing-pull-requests)
+          A tarball was created for the ${{ matrix.package }} package for testing purposes. You can test the PR using the instructions [here](https://github.com/theforeman/foreman-js/blob/master/CONTRIBUTING.md#testing-pull-requests)
           
           A direct download is available using
           ```
           wget -v -O ${{ matrix.package }}-pr-${{ github.event.number }}.zip --header "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/johnpmitsch/foreman-js/actions/artifacts/$ARTIFACT_ID/zip
           ```
-          Replacing `$GITHUB_TOKEN` with your github api token and `$ARTIFACT_ID` with the artifact id in the last part of the artifact URL. 
+          Replacing `$GITHUB_TOKEN` with your github api token and `$ARTIFACT_ID` with the artifact id in the last part of the artifact URL, found in the action itself. 
           For example, if the artifact link in the action is `https://github.com/theforeman/foreman-js/suites/1279365382/artifacts/19806792`, the `$ARTIFACT_ID` would be `19806792`
           
           Then the artifact can be unzipped using: `unzip ${{ matrix.package }}-pr-${{ github.event.number }}.zip` which contains the tarball.
