@@ -43,5 +43,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        msg: Check out ${{ github.event.html }}
+        msg: Check out ${{ github.event.number }}
         check_for_duplicate_msg: false   
