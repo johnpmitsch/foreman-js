@@ -43,5 +43,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        msg: Check out ${{ github.event.number }}
+        msg: |
+          A tarball was created for testing purposes the ${{ matrix.package }} package. 
+          You can test using the instructions in https://github.com/theforeman/foreman-js/blob/59066d6f396c31ede9558dcc169204d5c92b83d2/CONTRIBUTING.md#testing-pull-requests
         check_for_duplicate_msg: false   
