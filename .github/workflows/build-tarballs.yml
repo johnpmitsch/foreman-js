@@ -9,23 +9,6 @@ jobs:
     strategy:
       matrix:
         package: ['builder', 'eslint-plugin-foreman', 'find-foreman', 'stories', 'test', 'vendor-core', 'vendor-dev', 'vendor']
-        include: # providing package path info
-        - package: builder
-          path: 'packages/builder/**'
-        - package: eslint-plugin-foreman
-          path: 'packages/eslint-plugin-foreman/**'
-        - package: find-foreman
-          path: 'packages/find-foreman/**'
-        - package: stories
-          path: 'packages/stories/**'
-        - package: test
-          path: 'packages/test/**'
-        - package: vendor-core
-          path: 'packages/vendor-core/**'
-        - package: vendor-dev
-          path: 'packages/vendor-dev/**'
-        - package: vendor
-          path: 'packages/vendor/**'
 
     steps:
     # only run if changes are detected in specified path
@@ -35,7 +18,7 @@ jobs:
       with:
         filters: |
           matched:
-            - ${{ matrix.path }}
+            - packages/${{ matrix.package }}/**
     - name: Set up node
       if: ${{ steps.changes.outputs.matched == 'true' }}
       uses: actions/setup-node@v1
