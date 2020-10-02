@@ -38,9 +38,10 @@ jobs:
         name: foreman-js-${{ matrix.package }}-pr-${{ github.event.number }}.tgz
         path: ${{ github.workspace }}/packages/${{ matrix.package }}/theforeman-${{ matrix.package }}-*.tgz
     - name: comment on PR
-      uses: unsplash/comment-on-pr@master
+      if: ${{ steps.changes.outputs.matched == 'true' }}
+      uses: unsplash/comment-on-pr@v1.2.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        msg: Check out ${{ github.event.pull_request.html }}
+        msg: Check out ${{ github.event.html }}
         check_for_duplicate_msg: false   
